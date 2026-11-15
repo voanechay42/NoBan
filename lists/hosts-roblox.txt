@@ -1,0 +1,2 @@
+# Roblox CDN (картинки)
+18.65.39.105 tr.rbxcdn.com
