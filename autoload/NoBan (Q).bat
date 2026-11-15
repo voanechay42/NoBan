@@ -1,0 +1,22 @@
+@echo off
+chcp 65001 > nul
+
+cd /d "%~dp0.."
+call service.bat status_noban
+call service.bat check_updates
+call service.bat load_game_filter
+echo:
+
+set "BIN=%~dp0..\bin\"
+set "LISTS=%~dp0..\lists\"
+cd /d "%BIN%"
+
+start "Bypass: NoBan (Q) | 8.0" /min "%BIN%NoBan.exe" --wf-tcp=80,443,2053,2083,2087,2096,8443,%GameFilter% --wf-udp=443,19294-19344,50000-50100,%GameFilter% ^
+--filter-udp=443 --hostlist="%LISTS%white-list.txt" --hostlist-exclude="%LISTS%black-list.txt" --ipset-exclude="%LISTS%ipset-exclude.txt" --dpi-desync=fake --dpi-desync-repeats=8 --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^
+--filter-udp=19294-19344,50000-50100 --filter-l7=discord,stun --dpi-desync=fake --dpi-desync-fake-discord="%BIN%ACTIVE_DISCORD_UDP.bin" --dpi-desync-fake-stun="%BIN%ACTIVE_DISCORD_UDP.bin" --dpi-desync-repeats=8 --new ^
+--filter-tcp=2053,2083,2087,2096,8443 --hostlist-domains=discord.media --dpi-desync=fake,fakedsplit --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --dpi-desync-fooling=ts --dpi-desync-fakedsplit-pattern=0x00 --dpi-desync-repeats=8 --new ^
+--filter-tcp=443 --hostlist="%LISTS%white-list.txt" --ip-id=zero --dpi-desync=fake,fakedsplit --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --dpi-desync-fooling=ts --dpi-desync-fakedsplit-pattern=0x00 --dpi-desync-repeats=8 --new ^
+--filter-tcp=80,443 --hostlist="%LISTS%white-list.txt" --hostlist-exclude="%LISTS%black-list.txt" --ipset-exclude="%LISTS%ipset-exclude.txt" --dpi-desync=fake,fakedsplit --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --dpi-desync-fake-http="%BIN%tls_clienthello_max_ru.bin" --dpi-desync-fooling=ts --dpi-desync-fakedsplit-pattern=0x00 --dpi-desync-repeats=8 --new ^
+--filter-udp=443 --ipset="%LISTS%ipset-all.txt" --hostlist-exclude="%LISTS%black-list.txt" --ipset-exclude="%LISTS%ipset-exclude.txt" --dpi-desync=fake --dpi-desync-repeats=8 --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^
+--filter-tcp=80,443,%GameFilter% --ipset="%LISTS%ipset-all.txt" --hostlist-exclude="%LISTS%black-list.txt" --ipset-exclude="%LISTS%ipset-exclude.txt" --dpi-desync=fake,fakedsplit --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --dpi-desync-fake-http="%BIN%tls_clienthello_max_ru.bin" --dpi-desync-fooling=ts --dpi-desync-fakedsplit-pattern=0x00 --dpi-desync-repeats=8 --new ^
+--filter-udp=%GameFilter% --ipset="%LISTS%ipset-all.txt" --ipset-exclude="%LISTS%ipset-exclude.txt" --dpi-desync=fake --dpi-desync-any-protocol=1 --dpi-desync-fake-unknown-udp="%BIN%ACTIVE_GAME_UDP.bin" --dpi-desync-cutoff=n3
