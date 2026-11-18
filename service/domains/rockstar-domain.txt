@@ -1,1 +1,14 @@
-
+rockstargames.com
+www.rockstargames.com
+socialclub.rockstargames.com
+support.rockstargames.com
+store.rockstargames.com
+launcher.rockstargames.com
+signin.rockstargames.com
+auth.rockstargames.com
+api.rockstargames.com
+media.rockstargames.com
+downloads.rockstargames.com
+prod.ros.rockstargames.com
+gta5.rockstargames.com
+reddeadredemption2.rockstargames.com
